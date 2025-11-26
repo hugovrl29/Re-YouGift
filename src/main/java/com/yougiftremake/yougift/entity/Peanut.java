@@ -1,0 +1,103 @@
+package com.yougiftremake.yougift.entity;
+
+import java.util.List;
+
+import jakarta.persistence.*;
+
+@Entity(name = "peanuts")
+@Table(name = "PEANUTS")
+public class Peanut {
+
+    @Id
+    @SequenceGenerator(
+        name = "peanut_sequence",
+        sequenceName = "peanut_sequence",
+        allocationSize = 1
+    )
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "peanut_sequence"
+    )
+    private Long id;
+
+    @Column(
+        name = "is_distributed",
+        nullable = false
+    )
+    private Boolean isDistributed;
+
+    @ManyToOne(
+        fetch = FetchType.LAZY,
+        cascade = CascadeType.ALL
+    )
+    private User owner;
+
+    @OneToMany(
+        mappedBy = "peanut",
+        fetch = FetchType.LAZY,
+        cascade = CascadeType.ALL
+    )
+    private List<Wishlist> wishlists;
+
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = CascadeType.ALL
+    )
+    List<User> users;
+
+    // Constructors
+    public Peanut() {
+    }
+
+    public Peanut(Long id, Boolean isDistributed, User owner, List<Wishlist> wishlists, List<User> users) {
+        this.id = id;
+        this.isDistributed = isDistributed;
+        this.owner = owner;
+        this.wishlists = wishlists;
+        this.users = users;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Boolean getIsDistributed() {
+        return isDistributed;
+    }
+    public void setIsDistributed(Boolean isDistributed) {
+        this.isDistributed = isDistributed;
+    }
+    public User getOwner() {
+        return owner;
+    }
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+    public List<Wishlist> getWishlists() {
+        return wishlists;
+    }
+    public void setWishlists(List<Wishlist> wishlists) {
+        this.wishlists = wishlists;
+    }
+    public List<User> getUsers() {
+        return users;
+    }
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public String toString() {
+        return "Peanut{" +
+                "id=" + id +
+                ", isDistributed=" + isDistributed +
+                ", owner=" + owner +
+                ", wishlists=" + wishlists +
+                ", users=" + users +
+                '}';
+    }
+
+
+}
