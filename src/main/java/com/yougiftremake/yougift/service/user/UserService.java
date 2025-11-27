@@ -86,8 +86,8 @@ public class UserService {
            !updateRequest.profilePictureUrl().equals(user.getProfilePictureUrl())) {
             user.setProfilePictureUrl(updateRequest.profilePictureUrl());
         }
-        User updatedUser = userRepository.save(user);
-        return toDTO(updatedUser);
+
+        return toDTO(user);
     }
 
     public void deleteUser(Long userId) {
@@ -97,9 +97,11 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId)
-            .orElseThrow(() -> new IllegalStateException("User with id " + userId + " does not exist"));
+    public UserResponse getUserById(Long userId) {
+        return toDTO(userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException(
+                "User with id " + userId + " does not exist"
+            )));
     }
 
     public List<User> getUserByUsername(String username) {
