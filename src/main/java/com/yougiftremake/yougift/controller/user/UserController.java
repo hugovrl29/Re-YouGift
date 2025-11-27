@@ -15,7 +15,6 @@ import jakarta.validation.Valid;
 import com.yougiftremake.yougift.dto.user.UserCreateRequest;
 import com.yougiftremake.yougift.dto.user.UserResponse;
 import com.yougiftremake.yougift.dto.user.UserUpdateRequest;
-import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.service.user.UserService;
 
 @RestController
