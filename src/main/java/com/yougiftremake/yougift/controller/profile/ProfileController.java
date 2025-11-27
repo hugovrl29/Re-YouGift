@@ -7,7 +7,6 @@ import com.yougiftremake.yougift.dto.user.UserResponse;
 import com.yougiftremake.yougift.dto.user.UserUpdateRequest;
 import com.yougiftremake.yougift.service.user.UserService;
 
-import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
