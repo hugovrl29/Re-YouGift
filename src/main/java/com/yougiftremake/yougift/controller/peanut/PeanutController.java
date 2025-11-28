@@ -73,7 +73,7 @@ public class PeanutController {
         return ResponseEntity.ok(wishlistIds);
     }
 
-    @PostMapping("/{id}/add-wishlist")
+    @PostMapping("/{id}/add-wishlist/{wishlistId}")
     public ResponseEntity<PeanutResponse> addWishlistToPeanut(
         @PathVariable Long id,
         @RequestBody Long wishlistId
@@ -83,7 +83,7 @@ public class PeanutController {
         return ResponseEntity.ok(peanutResponse);
     }
 
-    @PostMapping("/{id}/remove-wishlist")
+    @PostMapping("/{id}/remove-wishlist/{wishlistId}")
     public ResponseEntity<PeanutResponse> removeWishlistFromPeanut(
         @PathVariable Long id,
         @RequestBody Long wishlistId

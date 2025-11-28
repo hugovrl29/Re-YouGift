@@ -76,11 +76,11 @@ public class WishlistService {
         wishlistRepository.deleteById(wishlistId);
     }
 
-    public Wishlist getWishlistById(Long wishlistId) {
-        return wishlistRepository.findById(wishlistId)
+    public WishlistResponse getWishlistById(Long wishlistId) {
+        return toDTO(wishlistRepository.findById(wishlistId)
             .orElseThrow(() -> new IllegalStateException(
                 "Wishlist with id " + wishlistId + " does not exist"
-            ));
+            )));
     }
 
     public WishlistResponse getWishlistByIdAsDTO(Long wishlistId) {
@@ -111,7 +111,7 @@ public class WishlistService {
     }
 
     @Transactional
-    public void addItemToWishlist(Long wishlistId, Long itemId) {
+    public WishlistResponse addItemToWishlist(Long wishlistId, Long itemId) {
         Wishlist wishlist = wishlistRepository.findById(wishlistId)
             .orElseThrow(() -> new IllegalStateException(
                 "Wishlist with id " + wishlistId + " does not exist"
@@ -125,11 +125,12 @@ public class WishlistService {
         if (item.getWishlists() != null) {
             item.getWishlists().add(wishlist);
         }
-        wishlistRepository.save(wishlist);
+        Wishlist saved = wishlistRepository.save(wishlist);
+        return toDTO(saved);
     }
 
     @Transactional
-    public void removeItemFromWishlist(Long wishlistId, Long itemId) {
+    public WishlistResponse removeItemFromWishlist(Long wishlistId, Long itemId) {
         Wishlist wishlist = wishlistRepository.findById(wishlistId)
             .orElseThrow(() -> new IllegalStateException(
                 "Wishlist with id " + wishlistId + " does not exist"
@@ -142,7 +143,19 @@ public class WishlistService {
         if (item.getWishlists() != null) {
             item.getWishlists().remove(wishlist);
         }
-        wishlistRepository.save(wishlist);
+        Wishlist saved = wishlistRepository.save(wishlist);
+        return toDTO(saved);
+    }
+
+    @Transactional
+    public List<Long> getWishlistItemIds(Long wishlistId) {
+        Wishlist wishlist = wishlistRepository.findById(wishlistId)
+            .orElseThrow(() -> new IllegalStateException(
+                "Wishlist with id " + wishlistId + " does not exist"
+            ));
+        return wishlist.getItems().stream()
+            .map(WishlistItem::getId)
+            .toList();
     }
 
     public WishlistResponse toDTO(Wishlist wishlist) {
