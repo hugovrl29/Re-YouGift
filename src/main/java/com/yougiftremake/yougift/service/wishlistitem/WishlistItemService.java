@@ -63,18 +63,18 @@ public class WishlistItemService {
         wishlistItemRepository.deleteById(wishlistItemId);
     }
 
-    public WishlistItem getWishlistItemById(Long wishlistItemId) {
-        return wishlistItemRepository.findById(wishlistItemId)
-            .orElseThrow(() -> new IllegalStateException(
-                "Wishlist Item with id " + wishlistItemId + " does not exist"
-            ));
-    }
-
-    public WishlistItemResponse getWishlistItemByIdAsDTO(Long wishlistItemId) {
+    public WishlistItemResponse getWishlistItemById(Long wishlistItemId) {
         return toDTO(wishlistItemRepository.findById(wishlistItemId)
             .orElseThrow(() -> new IllegalStateException(
                 "Wishlist Item with id " + wishlistItemId + " does not exist"
             )));
+    }
+
+    public List<WishlistItemResponse> getWishlistItemByIdAsDTO(Long wishlistItemId) {
+        return wishlistItemRepository.findById(wishlistItemId)
+            .stream()
+            .map(this::toDTO)
+            .toList();
     }
 
     public List<WishlistItem> searchWishlistItemsByName(String name) {
