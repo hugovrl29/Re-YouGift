@@ -2,10 +2,9 @@ package com.yougiftremake.yougift.service.authentication;
 
 import org.springframework.stereotype.Service;
 
-import com.yougiftremake.yougift.dto.authentication.LoginRequest;
-import com.yougiftremake.yougift.dto.authentication.LoginResponse;
-import com.yougiftremake.yougift.dto.user.UserCreateRequest;
-import com.yougiftremake.yougift.dto.user.UserResponse;
+import com.yougiftremake.yougift.dto.authentication.*;
+import com.yougiftremake.yougift.dto.user.*;
+
 import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.repository.user.UserRepository;
 

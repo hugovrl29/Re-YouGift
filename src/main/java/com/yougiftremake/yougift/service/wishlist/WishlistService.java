@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.yougiftremake.yougift.dto.wishlist.WishlistCreateRequest;
-import com.yougiftremake.yougift.dto.wishlist.WishlistResponse;
-import com.yougiftremake.yougift.dto.wishlist.WishlistUpdateRequest;
+import com.yougiftremake.yougift.dto.wishlist.*;
+
 import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.entity.Wishlist;
 import com.yougiftremake.yougift.entity.WishlistItem;
+
 import com.yougiftremake.yougift.repository.user.UserRepository;
 import com.yougiftremake.yougift.repository.wishlist.WishlistRepository;
 import com.yougiftremake.yougift.repository.wishlistitem.WishlistItemRepository;

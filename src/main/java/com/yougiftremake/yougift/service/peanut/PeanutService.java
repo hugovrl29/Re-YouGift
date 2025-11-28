@@ -6,9 +6,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.yougiftremake.yougift.dto.peanut.PeanutCreateRequest;
-import com.yougiftremake.yougift.dto.peanut.PeanutResponse;
-import com.yougiftremake.yougift.dto.peanut.PeanutUpdateRequest;
+import com.yougiftremake.yougift.dto.peanut.*;
 import com.yougiftremake.yougift.entity.Peanut;
 import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.entity.Wishlist;

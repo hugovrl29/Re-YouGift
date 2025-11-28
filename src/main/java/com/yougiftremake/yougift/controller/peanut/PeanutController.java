@@ -13,12 +13,6 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 
-
-
-
-
-
-
 @RestController
 @RequestMapping("/api/peanuts")
 public class PeanutController {

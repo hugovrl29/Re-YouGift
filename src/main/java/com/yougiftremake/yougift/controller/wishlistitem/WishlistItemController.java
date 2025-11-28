@@ -5,16 +5,8 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.yougiftremake.yougift.dto.wishlistitem.WishlistItemCreateRequest;
-import com.yougiftremake.yougift.dto.wishlistitem.WishlistItemResponse;
+import com.yougiftremake.yougift.dto.wishlistitem.*;
 import com.yougiftremake.yougift.service.wishlistitem.WishlistItemService;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-
-
-
 
 @RestController
 @RequestMapping("/api/wishlist-items")

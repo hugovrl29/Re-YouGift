@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.yougiftremake.yougift.dto.user.UserCreateRequest;
-import com.yougiftremake.yougift.dto.user.UserResponse;
-import com.yougiftremake.yougift.dto.user.UserUpdateRequest;
+import com.yougiftremake.yougift.dto.user.*;
 import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.repository.user.UserRepository;
 

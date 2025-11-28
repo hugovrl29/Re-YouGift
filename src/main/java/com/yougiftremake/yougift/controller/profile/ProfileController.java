@@ -1,7 +1,6 @@
 package com.yougiftremake.yougift.controller.profile;
 
-import com.yougiftremake.yougift.dto.user.UserResponse;
-import com.yougiftremake.yougift.dto.user.UserUpdateRequest;
+import com.yougiftremake.yougift.dto.user.*;
 import com.yougiftremake.yougift.service.user.UserService;
 
 import org.springframework.http.ResponseEntity;

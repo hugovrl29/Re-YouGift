@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.yougiftremake.yougift.dto.wishlistitem.WishlistItemCreateRequest;
-import com.yougiftremake.yougift.dto.wishlistitem.WishlistItemResponse;
-import com.yougiftremake.yougift.dto.wishlistitem.WishlistItemUpdateRequest;
+import com.yougiftremake.yougift.dto.wishlistitem.*;
 import com.yougiftremake.yougift.entity.WishlistItem;
 import com.yougiftremake.yougift.repository.wishlistitem.WishlistItemRepository;
 

@@ -1,6 +1,8 @@
 package com.yougiftremake.yougift.repository.wishlistitem;
 
+import java.lang.classfile.ClassFile.Option;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,6 +13,8 @@ import com.yougiftremake.yougift.entity.WishlistItem;
 public interface WishlistItemRepository extends JpaRepository<WishlistItem, Long> {
 
     boolean existsByNameIgnoreCase(String name);
+
+    Optional<WishlistItem> findByNameIgnoreCase(String name);
 
     List<WishlistItem> findByNameContainingIgnoreCase(String name);
 

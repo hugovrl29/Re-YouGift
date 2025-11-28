@@ -8,12 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
-import com.yougiftremake.yougift.dto.user.UserCreateRequest;
-import com.yougiftremake.yougift.dto.user.UserResponse;
-import com.yougiftremake.yougift.dto.user.UserUpdateRequest;
+import com.yougiftremake.yougift.dto.user.*;
 import com.yougiftremake.yougift.service.user.UserService;
-
-
 
 @RestController
 @RequestMapping("/api/users")

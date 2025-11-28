@@ -2,9 +2,7 @@ package com.yougiftremake.yougift.controller.wishlist;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.yougiftremake.yougift.dto.wishlist.WishlistCreateRequest;
-import com.yougiftremake.yougift.dto.wishlist.WishlistResponse;
-import com.yougiftremake.yougift.dto.wishlist.WishlistUpdateRequest;
+import com.yougiftremake.yougift.dto.wishlist.*;
 import com.yougiftremake.yougift.service.wishlist.WishlistService;
 
 import jakarta.validation.Valid;
@@ -12,13 +10,6 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-
-
 
 @RestController
 @RequestMapping("/api/wishlists")
