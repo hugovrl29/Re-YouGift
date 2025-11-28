@@ -117,6 +117,16 @@ public class UserService {
         user.setIsBanned(!user.getIsBanned());
     }
 
+    @Transactional
+    public UserResponse changeBanStatusAndReturn(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException(
+                "User with id " + userId + " does not exist"
+            ));
+        user.setIsBanned(!user.getIsBanned());
+        return toDTO(user);
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -129,20 +139,90 @@ public class UserService {
         return user.getFriends();
     }
 
+    public List<UserResponse> getFriendsOfUserAsDTO(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException(
+                "User with id " + userId + " does not exist"
+            ));
+        return user.getFriends().stream()
+            .map(this::toDTO)
+            .toList();
+    }
+
+    public List<UserResponse> getAllUsersAsDTO() {
+        return userRepository.findAll().stream()
+            .map(this::toDTO)
+            .toList();
+    }
+
     @Transactional
-    public void addFriend(User user, User friend) {
+    public UserResponse addFriend(Long userId, Long friendId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException(
+                "User with id " + userId + " does not exist"
+            ));
+        User friend = userRepository.findById(friendId)
+            .orElseThrow(() -> new IllegalStateException(
+                "Friend with id " + friendId + " does not exist"
+            ));
+        
+        if (userId.equals(friendId)) {
+            throw new IllegalStateException("Cannot add yourself as a friend");
+        }
+        
+        if (user.getFriends().contains(friend)) {
+            throw new IllegalStateException("Already friends with this user");
+        }
+        
         user.getFriends().add(friend);
         friend.getFriends().add(user);
         userRepository.save(user);
         userRepository.save(friend);
+        return toDTO(user);
     }
 
     @Transactional
-    public void removeFriend(User user, User friend) {
+    public UserResponse removeFriend(Long userId, Long friendId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException(
+                "User with id " + userId + " does not exist"
+            ));
+        User friend = userRepository.findById(friendId)
+            .orElseThrow(() -> new IllegalStateException(
+                "Friend with id " + friendId + " does not exist"
+            ));
+        
+        if (!user.getFriends().contains(friend)) {
+            throw new IllegalStateException("Not friends with this user");
+        }
+        
         user.getFriends().remove(friend);
         friend.getFriends().remove(user);
         userRepository.save(user);
         userRepository.save(friend);
+        return toDTO(user);
+    }
+
+    public List<Long> getWishlistsOfUser(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException(
+                "User with id " + userId + " does not exist"
+            ));
+        List<Long> wishlistIds = user.getWishlists().stream()
+            .map(wishlist -> wishlist.getId())
+            .toList();
+        return wishlistIds;
+    }
+
+    public List<Long> getPeanutsOfUser(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException(
+                "User with id " + userId + " does not exist"
+            ));
+        List<Long> peanutIds = user.getPeanuts().stream()
+            .map(peanut -> peanut.getId())
+            .toList();
+        return peanutIds;
     }
 
     public UserResponse toDTO(User user) {

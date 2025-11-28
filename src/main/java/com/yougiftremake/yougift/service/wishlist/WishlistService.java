@@ -83,12 +83,31 @@ public class WishlistService {
             ));
     }
 
+    public WishlistResponse getWishlistByIdAsDTO(Long wishlistId) {
+        return toDTO(wishlistRepository.findById(wishlistId)
+            .orElseThrow(() -> new IllegalStateException(
+                "Wishlist with id " + wishlistId + " does not exist"
+            )));
+    }
+
     public List<Wishlist> getAllWishlists() {
         return wishlistRepository.findAll();
     }
 
+    public List<WishlistResponse> getAllWishlistsAsDTO() {
+        return wishlistRepository.findAll().stream()
+            .map(this::toDTO)
+            .toList();
+    }
+
     public List<Wishlist> getWishlistsByOwnerId(Long ownerId) {
         return wishlistRepository.findByOwnerId(ownerId);
+    }
+
+    public List<WishlistResponse> getWishlistsByOwnerIdAsDTO(Long ownerId) {
+        return wishlistRepository.findByOwnerId(ownerId).stream()
+            .map(this::toDTO)
+            .toList();
     }
 
     @Transactional

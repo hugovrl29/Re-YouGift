@@ -1,18 +1,11 @@
 package com.yougiftremake.yougift.controller.profile;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.yougiftremake.yougift.dto.user.UserResponse;
 import com.yougiftremake.yougift.dto.user.UserUpdateRequest;
 import com.yougiftremake.yougift.service.user.UserService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -41,6 +34,6 @@ public class ProfileController {
     @DeleteMapping("/edit-my-profile")
     public ResponseEntity<String> deleteMyProfile(@RequestParam Long userId) {
         profileService.deleteUser(userId);
-        return ResponseEntity.ok("User deleted successfully");
+        return ResponseEntity.noContent().build();
     }
 }

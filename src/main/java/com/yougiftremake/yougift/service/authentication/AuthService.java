@@ -25,20 +25,42 @@ public class AuthService {
         if (userRepository.existsByEmail(createRequest.email())) {
             throw new IllegalStateException("Email already in use");
         }
-        UserResponse userResponse = new UserResponse(
-            null,
+        User user = new User(
             createRequest.username(),
+            createRequest.password(),
             createRequest.email(),
             createRequest.firstName(),
             createRequest.lastName(),
+            false,
+            createRequest.dateOfBirth(),
             createRequest.profilePictureUrl(),
-            createRequest.dateOfBirth()
+            null,
+            null,
+            null,
+            null
         );
-        return userResponse;
+        User savedUser = userRepository.save(user);
+        return new UserResponse(
+            savedUser.getId(),
+            savedUser.getUsername(),
+            savedUser.getEmail(),
+            savedUser.getFirstName(),
+            savedUser.getLastName(),
+            savedUser.getProfilePictureUrl(),
+            savedUser.getDateOfBirth()
+        );
     }
 
-    public LoginResponse login(LoginRequest loginRequest) {;
+    public LoginResponse login(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.username());
+
+        if (user == null) {
+            throw new IllegalStateException("User not found");
+        }
+
+        if (user.getIsBanned()) {
+            throw new IllegalStateException("User account is banned");
+        }
 
         if (!user.getPassword().equals(loginRequest.password())) {
             throw new IllegalStateException("Invalid password");

@@ -171,35 +171,88 @@ public class PeanutService {
         peanutRepository.save(peanut);
     }
 
-    public List<User> getUsersInPeanut(Long peanutId) {
+    public List<Long> getUsersInPeanut(Long peanutId) {
         Peanut peanut = peanutRepository.findById(peanutId)
             .orElseThrow(() -> new IllegalStateException(
                 "Peanut with id " + peanutId + " does not exist"
             ));
-        return peanut.getUsers();
+        List<Long> userIds = new ArrayList<>();
+        for (User user : peanut.getUsers()) {
+            userIds.add(user.getId());
+        }
+        return userIds;
     }
 
-    public List<Wishlist> getWishlistsInPeanut(Long peanutId) {
+    public List<Long> getWishlistsInPeanut(Long peanutId) {
         Peanut peanut = peanutRepository.findById(peanutId)
             .orElseThrow(() -> new IllegalStateException(
                 "Peanut with id " + peanutId + " does not exist"
             ));
-        return peanut.getWishlists();
+        List<Long> wishlistIds = new ArrayList<>();
+        for (Wishlist wishlist : peanut.getWishlists()) {
+            wishlistIds.add(wishlist.getId());
+        }
+        return wishlistIds;
     }
 
     public List<Peanut> getAllPeanuts() {
         return peanutRepository.findAll();
     }
 
+    public List<PeanutResponse> getAllPeanutsAsDTO() {
+        return peanutRepository.findAll().stream()
+            .map(this::toDTO)
+            .toList();
+    }
+
     public List<Peanut> getPeanutsByOwnerId(Long ownerId) {
         return peanutRepository.findByOwnerId(ownerId);
     }
 
-    public Peanut getPeanutById(Long peanutId) {
-        return peanutRepository.findById(peanutId)
+    public List<PeanutResponse> getPeanutsByOwnerIdAsDTO(Long ownerId) {
+        return peanutRepository.findByOwnerId(ownerId).stream()
+            .map(this::toDTO)
+            .toList();
+    }
+
+    public PeanutResponse getPeanutById(Long peanutId) {
+        return toDTO(peanutRepository.findById(peanutId)
+            .orElseThrow(() -> new IllegalStateException(
+                "Peanut with id " + peanutId + " does not exist"
+            )));
+    }
+
+    @Transactional
+    public PeanutResponse distributeAndReturn(Long peanutId) {
+        Peanut peanut = peanutRepository.findById(peanutId)
             .orElseThrow(() -> new IllegalStateException(
                 "Peanut with id " + peanutId + " does not exist"
             ));
+        if (peanut.getIsDistributed()) {
+            throw new IllegalStateException("Peanut is already distributed");
+        }
+
+        if (peanut.getWishlists().isEmpty()) {
+            throw new IllegalStateException("Peanut has no wishlists to distribute");
+        }
+        List<User> allUsers = new ArrayList<>(peanut.getUsers());
+        if (allUsers.size() < 2) {
+            throw new IllegalStateException("Not enough users to distribute peanut");
+        }
+
+        // Random shift for distribution
+        long seed = System.currentTimeMillis();
+        Random random = new Random(seed);
+        int shift = random.nextInt(allUsers.size() - 1) + 1;
+
+        // New rotated list
+        List<User> shuffledUsers = rotate(allUsers, shift);
+
+        peanut.setUsers(shuffledUsers);
+        peanut.setIsDistributed(true);
+
+        Peanut savedPeanut = peanutRepository.save(peanut);
+        return toDTO(savedPeanut);
     }
 
     public PeanutResponse toDTO(Peanut peanut) {

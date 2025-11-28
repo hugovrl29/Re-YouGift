@@ -70,12 +70,31 @@ public class WishlistItemService {
             ));
     }
 
+    public WishlistItemResponse getWishlistItemByIdAsDTO(Long wishlistItemId) {
+        return toDTO(wishlistItemRepository.findById(wishlistItemId)
+            .orElseThrow(() -> new IllegalStateException(
+                "Wishlist Item with id " + wishlistItemId + " does not exist"
+            )));
+    }
+
     public List<WishlistItem> searchWishlistItemsByName(String name) {
         return wishlistItemRepository.findByNameContainingIgnoreCase(name);
     }
 
+    public List<WishlistItemResponse> searchWishlistItemsByNameAsDTO(String name) {
+        return wishlistItemRepository.findByNameContainingIgnoreCase(name).stream()
+            .map(this::toDTO)
+            .toList();
+    }
+
     public List<WishlistItem> getAllWishlistItems() {
         return wishlistItemRepository.findAll();
+    }
+
+    public List<WishlistItemResponse> getAllWishlistItemsAsDTO() {
+        return wishlistItemRepository.findAll().stream()
+            .map(this::toDTO)
+            .toList();
     }
 
     public WishlistItemResponse toDTO(WishlistItem wishlistItem) {
