@@ -51,7 +51,7 @@ public class WishlistRepositoryTest {
 
         );
 
-        wish = new Wishlist(
+        wish2 = new Wishlist(
             "Wishlist 2",
             " This is another wishlist",
             null,
@@ -62,6 +62,7 @@ public class WishlistRepositoryTest {
 
 
         wishlistRepository.save(wish);
+        wishlistRepository.save(wish2);
     }
 
     @Test
