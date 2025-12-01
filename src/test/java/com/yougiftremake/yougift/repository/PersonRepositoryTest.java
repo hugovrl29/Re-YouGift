@@ -138,8 +138,43 @@ public class PersonRepositoryTest {
 
         assertNotNull(savedUser.getId());
         assertEquals("new_user", savedUser.getUsername());
-        
+        assertEquals("newpassword", savedUser.getPassword());
+        assertEquals("newuser@test.com", savedUser.getEmail());
+        assertEquals("New", savedUser.getFirstName());
+        assertEquals("User", savedUser.getLastName());
+        assertFalse(savedUser.getIsBanned());
+        assertEquals(LocalDate.of(2000, 1, 1), savedUser.getDateOfBirth());
+        assertEquals("Hello, I am new!", savedUser.getBio()); 
     }
 
+    @Test
+    void shouldUpdateUser(){
+        // Arrange
 
+        User user = userRepository.findByUsername("john_doe");
+
+        // Act
+
+        user.setBio("New bio");
+
+        // Assert
+
+        assertNotNull(user.getBio());
+        assertEquals("New bio", user.getBio());
+    }
+
+    @Test
+    void shouldDeleteUser(){
+        // Arrange
+
+        Long id = 3L;
+
+        // Act
+
+        userRepository.deleteById(id);
+
+        // Assert
+
+        assertFalse(userRepository.existsById(id));
+    }
 }
