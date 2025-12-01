@@ -1,4 +1,4 @@
-# YouGift — Backend API
+# Re:YouGift - Backend API
 
 YouGift is a Spring Boot backend designed for a gift-exchange platform. The system allows users to create an account, build wishlists, join groups (called "Peanuts"), and participate in automated Secret-Santa style assignment.
 
