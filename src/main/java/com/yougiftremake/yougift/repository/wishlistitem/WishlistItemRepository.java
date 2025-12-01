@@ -17,6 +17,6 @@ public interface WishlistItemRepository extends JpaRepository<WishlistItem, Long
 
     List<WishlistItem> findByNameContainingIgnoreCase(String name);
 
-    List<WishlistItem> findByWishlistId(Long wishlistId);
+    List<WishlistItem> findByWishlists_Id(Long wishlistId);
 
 }

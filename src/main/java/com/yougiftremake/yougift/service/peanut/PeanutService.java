@@ -35,9 +35,6 @@ public class PeanutService {
 
     @Transactional
     public PeanutResponse createPeanutFromRequest(PeanutCreateRequest createRequest) {
-        if (peanutRepository.existsByNameIgnoreCase(createRequest.name())) {
-            throw new IllegalStateException("Peanut with this name already exists");
-        }
         User owner = userRepository.findById(createRequest.ownerId())
             .orElseThrow(() -> new IllegalStateException("User with id " + createRequest.ownerId() + " does not exist"));
         Peanut peanut = new Peanut(null, false, owner, null, null);
