@@ -37,7 +37,7 @@ public class PeanutService {
     public PeanutResponse createPeanutFromRequest(PeanutCreateRequest createRequest) {
         User owner = userRepository.findById(createRequest.ownerId())
             .orElseThrow(() -> new IllegalStateException("User with id " + createRequest.ownerId() + " does not exist"));
-        Peanut peanut = new Peanut(null, false, owner, null, null);
+        Peanut peanut = new Peanut(false, owner, null, null);
         Peanut savedPeanut = peanutRepository.save(peanut);
         return toDTO(savedPeanut);
     }

@@ -24,7 +24,7 @@ public class WishlistItemService {
         if (wishlistItemRepository.existsByNameIgnoreCase(createRequest.name())) {
             throw new IllegalStateException("Wishlist Item with this name already exists");
         }
-        WishlistItem wishlistItem = new WishlistItem(null, createRequest.name(), createRequest.description(), null);
+        WishlistItem wishlistItem = new WishlistItem(createRequest.name(), createRequest.description(), null);
         WishlistItem savedItem = wishlistItemRepository.save(wishlistItem);
         return toDTO(savedItem);
     }

@@ -39,7 +39,7 @@ public class WishlistService {
         }
         User owner = userRepository.findById(createRequest.ownerId())
             .orElseThrow(() -> new IllegalStateException("User with id " + createRequest.ownerId() + " does not exist"));
-        Wishlist wishlist = new Wishlist(null, createRequest.name(), createRequest.description(), null, null, owner);
+        Wishlist wishlist = new Wishlist(createRequest.name(), createRequest.description(), null, null, owner);
         Wishlist savedWishlist = wishlistRepository.save(wishlist);
         return toDTO(savedWishlist);
     }

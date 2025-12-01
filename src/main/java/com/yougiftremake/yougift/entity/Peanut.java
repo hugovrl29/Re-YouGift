@@ -49,8 +49,7 @@ public class Peanut {
     public Peanut() {
     }
 
-    public Peanut(Long id, Boolean isDistributed, User owner, List<Wishlist> wishlists, List<User> users) {
-        this.id = id;
+    public Peanut(Boolean isDistributed, User owner, List<Wishlist> wishlists, List<User> users) {
         this.isDistributed = isDistributed;
         this.owner = owner;
         this.wishlists = wishlists;

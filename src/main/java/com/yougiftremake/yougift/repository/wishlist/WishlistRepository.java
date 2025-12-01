@@ -13,6 +13,8 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
 
     boolean existsByNameIgnoreCase(String name);
 
+    Optional<Wishlist> findById(Long id);
+
     Optional<Wishlist> findByNameIgnoreCase(String name);
 
     List<Wishlist> findByNameContainingIgnoreCase(String name);

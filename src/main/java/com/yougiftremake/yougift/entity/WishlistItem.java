@@ -41,8 +41,7 @@ public class WishlistItem {
 
     @ManyToMany(
         mappedBy = "items",
-        fetch = FetchType.LAZY,
-        cascade = CascadeType.ALL
+        fetch = FetchType.LAZY
     )
     private     List<Wishlist> wishlists;
 
@@ -50,8 +49,7 @@ public class WishlistItem {
     public WishlistItem() {
     }
 
-    public WishlistItem(Long id, String name, String description, List<Wishlist> wishlists) {
-        this.id = id;
+    public WishlistItem(String name, String description, List<Wishlist> wishlists) {
         this.name = name;
         this.description = description;
         this.wishlists = wishlists;

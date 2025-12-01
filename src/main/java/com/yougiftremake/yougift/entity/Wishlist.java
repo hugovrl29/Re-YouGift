@@ -39,8 +39,7 @@ public class Wishlist {
     private String description;
 
     @ManyToMany(
-        fetch = FetchType.LAZY,
-        cascade = CascadeType.ALL
+        fetch = FetchType.LAZY
     )
     @JoinTable(
         name = "wishlist_items",
@@ -73,8 +72,7 @@ public class Wishlist {
     public Wishlist() {
     }
 
-    public Wishlist(Long id, String name, String description, List<WishlistItem> items, Peanut peanut, User owner) {
-        this.id = id;
+    public Wishlist(String name, String description, List<WishlistItem> items, Peanut peanut, User owner) {
         this.name = name;
         this.description = description;
         this.items = items;
