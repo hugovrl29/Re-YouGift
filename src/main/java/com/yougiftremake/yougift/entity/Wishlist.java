@@ -1,6 +1,6 @@
 package com.yougiftremake.yougift.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -52,7 +52,7 @@ public class Wishlist {
             referencedColumnName = "id"
         )
     )
-    private List<WishlistItem> items;
+    private Set<WishlistItem> items;
 
     @ManyToOne(
         fetch = FetchType.LAZY,
@@ -72,7 +72,7 @@ public class Wishlist {
     public Wishlist() {
     }
 
-    public Wishlist(String name, String description, List<WishlistItem> items, Peanut peanut, User owner) {
+    public Wishlist(String name, String description, Set<WishlistItem> items, Peanut peanut, User owner) {
         this.name = name;
         this.description = description;
         this.items = items;
@@ -99,10 +99,10 @@ public class Wishlist {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<WishlistItem> getItems() {
+    public Set<WishlistItem> getItems() {
         return items;
     }
-    public void setItems(List<WishlistItem> items) {
+    public void setItems(Set<WishlistItem> items) {
         this.items = items;
     }
     public Peanut getPeanut() {

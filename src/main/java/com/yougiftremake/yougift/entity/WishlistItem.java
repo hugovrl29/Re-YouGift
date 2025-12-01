@@ -1,6 +1,6 @@
 package com.yougiftremake.yougift.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -43,13 +43,13 @@ public class WishlistItem {
         mappedBy = "items",
         fetch = FetchType.LAZY
     )
-    private     List<Wishlist> wishlists;
+    private     Set<Wishlist> wishlists;
 
     // Constructors
     public WishlistItem() {
     }
 
-    public WishlistItem(String name, String description, List<Wishlist> wishlists) {
+    public WishlistItem(String name, String description, Set<Wishlist> wishlists) {
         this.name = name;
         this.description = description;
         this.wishlists = wishlists;
@@ -74,10 +74,10 @@ public class WishlistItem {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<Wishlist> getWishlists() {
+    public Set<Wishlist> getWishlists() {
         return wishlists;
     }
-    public void setWishlists(List<Wishlist> wishlists) {
+    public void setWishlists(Set<Wishlist> wishlists) {
         this.wishlists = wishlists;
     }
 
