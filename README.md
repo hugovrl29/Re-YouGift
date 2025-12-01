@@ -33,6 +33,7 @@ The project demonstrates backend design principles including REST architecture, 
 ---
 
 ## Directory Structure
+```
 src/
  └─ main/
      └─ java/com/yougiftremake/yougift
@@ -98,6 +99,7 @@ src/
          (todo)
          └─ exception
               └─ Exceptions...
+```
 
 
 Tests follow the same structure under `src/test/java/com/yougiftremake/yougift`. (todo)
