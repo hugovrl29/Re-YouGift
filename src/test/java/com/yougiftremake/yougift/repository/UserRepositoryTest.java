@@ -16,7 +16,7 @@ import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.repository.user.UserRepository;
 
 @DataJpaTest
-public class PersonRepositoryTest {
+public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
