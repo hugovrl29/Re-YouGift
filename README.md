@@ -109,6 +109,6 @@ Tests follow the same structure under `src/test/java/com/yougiftremake/yougift`.
 ## Running the Project
 
 1. Clone the repository  
-2. Configure your database credentials in `src//main/resources/application.properties` 
+2. Configure your database credentials in `src/main/resources/application.properties` 
 3. Run: `mvn spring-boot:run`
 The backend runs at: http://localhost:8080
