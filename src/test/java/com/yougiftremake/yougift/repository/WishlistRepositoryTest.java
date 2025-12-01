@@ -79,9 +79,11 @@ public class WishlistRepositoryTest {
 
     @Test
     void shouldGetWishlistById(){
-        // Act
+        // Arrange
 
         Long userId = user.getId();
+
+        // Act
 
         Wishlist wishlist = wishlistRepository.findByOwnerId(userId).getFirst();
 
