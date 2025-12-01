@@ -20,6 +20,7 @@ public class WishlistRepositoryTest {
     private WishlistRepository wishlistRepository;
 
     private Wishlist wish;
+    private Wishlist wish2;
 
     private User user;
 
@@ -50,6 +51,15 @@ public class WishlistRepositoryTest {
 
         );
 
+        wish = new Wishlist(
+            "Wishlist 2",
+            " This is another wishlist",
+            null,
+            null,
+            user
+
+        );
+
 
         wishlistRepository.save(wish);
     }
@@ -63,8 +73,7 @@ public class WishlistRepositoryTest {
         // Assert
 
         assertNotNull(wishlists);
-        assertEquals(1, wishlists.size());
-        assertEquals("Wishlist 1", wishlists.get(0).getName());
+        assertEquals(2, wishlists.size());
     }
 
     @Test
