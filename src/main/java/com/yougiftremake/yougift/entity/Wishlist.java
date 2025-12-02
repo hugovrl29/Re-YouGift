@@ -42,7 +42,7 @@ public class Wishlist {
         fetch = FetchType.LAZY
     )
     @JoinTable(
-        name = "wishlist_items",
+        name = "wishlist_items_link",
         joinColumns = @JoinColumn(
             name = "wishlist_id",
             referencedColumnName = "id"
