@@ -1,6 +1,7 @@
 package com.yougiftremake.yougift.service.user;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -129,7 +130,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> getFriendsOfUser(Long userId) {
+    public Set<User> getFriendsOfUser(Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalStateException(
                 "User with id " + userId + " does not exist"

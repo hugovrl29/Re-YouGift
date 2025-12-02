@@ -1,7 +1,7 @@
 package com.yougiftremake.yougift.entity;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -93,21 +93,21 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
-    private List<User> friends;
+    private Set<User> friends;
 
     @OneToMany(
         mappedBy = "owner",
         fetch = FetchType.LAZY,
         cascade = CascadeType.ALL
     )
-    private List<Wishlist> wishlists;
+    private Set<Wishlist> wishlists;
 
     @OneToMany(
         mappedBy = "owner",
         fetch = FetchType.LAZY,
         cascade = CascadeType.ALL
     )
-    private List<Peanut> peanuts;
+    private Set<Peanut> peanuts;
 
     // Constructors
     public User() {}
@@ -122,9 +122,9 @@ public class User {
             LocalDate dateOfBirth,
             String profilePictureUrl,
             String bio,
-            List<User> friends,
-            List<Wishlist> wishlists,
-            List<Peanut> peanuts
+            Set<User> friends,
+            Set<Wishlist> wishlists,
+            Set<Peanut> peanuts
         ) {
         this.username = username;
         this.password = password;
@@ -202,22 +202,22 @@ public class User {
     public void setBio(String bio) {
         this.bio = bio;
     }
-    public List<User> getFriends() {
+    public Set<User> getFriends() {
         return friends;
     }
-    public void setFriends(List<User> friendsList) {
+    public void setFriends(Set<User> friendsList) {
         this.friends = friendsList;
     }
-    public List<Wishlist> getWishlists() {
+    public Set<Wishlist> getWishlists() {
         return wishlists;
     }
-    public void setWishlists(List<Wishlist> wishlists) {
+    public void setWishlists(Set<Wishlist> wishlists) {
         this.wishlists = wishlists;
     }
-    public List<Peanut> getPeanuts() {
+    public Set<Peanut> getPeanuts() {
         return peanuts;
     }
-    public void setPeanuts(List<Peanut> peanuts) {
+    public void setPeanuts(Set<Peanut> peanuts) {
         this.peanuts = peanuts;
     }
 

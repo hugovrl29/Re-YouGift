@@ -3,14 +3,19 @@ package com.yougiftremake.yougift.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
+import com.yougiftremake.yougift.entity.Peanut;
 import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.entity.Wishlist;
+import com.yougiftremake.yougift.entity.WishlistItem;
 import com.yougiftremake.yougift.repository.wishlist.WishlistRepository;
 
 @DataJpaTest
@@ -134,6 +139,88 @@ public class WishlistRepositoryTest {
         // Assert
 
         assertEquals("New description", wishlist.getDescription());
+    }
+
+    @Test
+    void shouldAddToPeanut(){
+
+        // Arrange
+
+        Peanut peanut = new Peanut(
+            false,
+            user,
+            null,
+            null
+        );
+
+        // Act
+
+        wish.setPeanut(peanut);
+
+        // Assert
+
+        assertEquals(peanut, wish.getPeanut());
+    }
+
+    @Test
+    void shouldSetOwner(){
+
+        // Arrange
+
+        Wishlist newWishlist = new Wishlist(
+            "Test",
+            "Test",
+            null,
+            null,
+            user
+        );
+
+        User test = new User(
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            false,
+            LocalDate.now(),
+            "Test",
+            "Test",
+            null,
+            null,
+            null
+        );
+
+        // Act
+
+        newWishlist.setOwner(test);
+
+        // Assert
+
+        assertEquals(test, newWishlist.getOwner());
+    }
+
+    @Test
+    void shouldAddItem(){
+
+        // Arrange
+
+        WishlistItem item = new WishlistItem(
+            "Test",
+            "test",
+            null
+        );
+
+        List<WishlistItem> itemsList = new ArrayList<>();
+        itemsList.add(item);
+        Set<WishlistItem> items = new HashSet<>(itemsList);
+
+        // Act
+
+        wish.setItems(items);
+
+        // Assert
+
+        assertEquals(items, wish.getItems());
     }
 
     @Test

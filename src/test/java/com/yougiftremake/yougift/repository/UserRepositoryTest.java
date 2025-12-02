@@ -3,13 +3,18 @@ package com.yougiftremake.yougift.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
+import com.yougiftremake.yougift.entity.Peanut;
 import com.yougiftremake.yougift.entity.User;
+import com.yougiftremake.yougift.entity.Wishlist;
 import com.yougiftremake.yougift.repository.user.UserRepository;
 
 @DataJpaTest
@@ -142,6 +147,71 @@ public class UserRepositoryTest {
         assertFalse(savedUser.getIsBanned());
         assertEquals(LocalDate.of(2000, 1, 1), savedUser.getDateOfBirth());
         assertEquals("Hello, I am new!", savedUser.getBio()); 
+    }
+
+    @Test
+    void shouldCreateWishlist(){
+        // Arrange
+
+        Wishlist wishlist = new Wishlist(
+            "Test",
+            "Test",
+            null,
+            null,
+            dupont
+        );
+
+        List<Wishlist> wishlistsList = new ArrayList<>();
+        wishlistsList.add(wishlist);
+        Set<Wishlist> wishlists = new HashSet<>(wishlistsList);
+
+        // Act
+
+        john.setWishlists(wishlists);
+
+        // Assert
+        assertTrue(john.getWishlists().contains(wishlist));
+    }
+
+    @Test
+    void shouldCreatePeanut(){
+        // Arrange
+
+        Peanut peanut = new Peanut(
+            false,
+            dupont,
+            null,
+            null
+        );
+
+        List<Peanut> peanutsList = new ArrayList<>();
+        peanutsList.add(peanut);
+        Set<Peanut> peanuts = new HashSet<>(peanutsList);
+
+        // Act
+
+        john.setPeanuts(peanuts);
+
+        // Assert
+        assertTrue(john.getPeanuts().contains(peanut));
+    }
+
+    @Test
+    void shouldAddFriend(){
+
+        // Arrange
+        List<User> johnFriendsList = new ArrayList<>();
+        johnFriendsList.add(jane);
+        Set<User> johnFriends = new HashSet<>(johnFriendsList);
+
+        // Act
+
+        john.setFriends(johnFriends);
+
+        // Assert
+
+        assertEquals(johnFriends, john.getFriends());
+        assertTrue(john.getFriends().contains(jane));
     }
 
     @Test

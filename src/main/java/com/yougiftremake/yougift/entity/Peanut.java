@@ -1,6 +1,6 @@
 package com.yougiftremake.yougift.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -37,19 +37,19 @@ public class Peanut {
         fetch = FetchType.LAZY,
         cascade = CascadeType.ALL
     )
-    private List<Wishlist> wishlists;
+    private Set<Wishlist> wishlists;
 
     @ManyToMany(
         fetch = FetchType.LAZY,
         cascade = CascadeType.ALL
     )
-    List<User> users;
+    Set<User> users;
 
     // Constructors
     public Peanut() {
     }
 
-    public Peanut(Boolean isDistributed, User owner, List<Wishlist> wishlists, List<User> users) {
+    public Peanut(Boolean isDistributed, User owner, Set<Wishlist> wishlists, Set<User> users) {
         this.isDistributed = isDistributed;
         this.owner = owner;
         this.wishlists = wishlists;
@@ -75,16 +75,16 @@ public class Peanut {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-    public List<Wishlist> getWishlists() {
+    public Set<Wishlist> getWishlists() {
         return wishlists;
     }
-    public void setWishlists(List<Wishlist> wishlists) {
+    public void setWishlists(Set<Wishlist> wishlists) {
         this.wishlists = wishlists;
     }
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 

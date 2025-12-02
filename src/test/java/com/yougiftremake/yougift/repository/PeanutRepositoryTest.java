@@ -3,7 +3,10 @@ package com.yougiftremake.yougift.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +122,37 @@ public class PeanutRepositoryTest {
         // Assert
 
         assertTrue(peanut.getIsDistributed());
+    }
+
+    @Test
+    void shouldSetUsers(){
+        // Arrange
+        User user = new User(
+            "test",
+            "Test",
+            "test",
+            "Test",
+            "Test",
+            false,
+            LocalDate.now(),
+            "Test",
+            "Test",
+            null,
+            null,
+            null
+        );
+
+        List<User> usersList = new ArrayList<>();
+        usersList.add(user);
+        Set<User> users = new HashSet<>(usersList);
+
+        // Act
+
+        peanut1.setUsers(users);
+
+        // Assert
+
+        assertEquals(users, peanut1.getUsers());
     }
 
     @Test

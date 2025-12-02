@@ -3,6 +3,7 @@ package com.yougiftremake.yougift.service.peanut;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -128,7 +129,7 @@ public class PeanutService {
         int shift = random.nextInt(allUsers.size() - 1) + 1;
 
         // New rotated list
-        List<User> shuffledUsers = rotate(allUsers, shift);
+        Set<User> shuffledUsers = rotate(allUsers, shift);
 
         peanut.setUsers(shuffledUsers);
         peanut.setIsDistributed(true);
@@ -136,7 +137,7 @@ public class PeanutService {
         return peanutRepository.save(peanut);
     }
 
-    public List<User> rotate(List<User> list, int shift) {
+    public Set<User> rotate(List<User> list, int shift) {
         int size = list.size();
         List<User> rotated = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
