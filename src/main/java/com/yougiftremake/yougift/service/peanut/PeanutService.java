@@ -2,10 +2,10 @@ package com.yougiftremake.yougift.service.peanut;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,7 @@ import com.yougiftremake.yougift.dto.peanut.*;
 import com.yougiftremake.yougift.entity.Peanut;
 import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.entity.Wishlist;
+import com.yougiftremake.yougift.entity.Dispatch;
 import com.yougiftremake.yougift.repository.peanut.PeanutRepository;
 import com.yougiftremake.yougift.repository.user.UserRepository;
 import com.yougiftremake.yougift.repository.wishlist.WishlistRepository;
@@ -221,13 +222,20 @@ public class PeanutService {
         List<Wishlist> shuffledWishlists = rotate(allWishlists, shift);
 
         // New dispatch
-        Map<User, Wishlist> newDispatch = new HashMap<>();
-        for (int i = 0; i < allUsers.size(); i++){
-            newDispatch.put(allUsers.get(i), shuffledWishlists.get(i));
-        }
+        Set<Dispatch> newDispatchs = new HashSet<>();
 
-        peanut.setDispatch(newDispatch);
-        peanut.setIsDistributed(true);
+        for (int i = 0; i < allUsers.size(); i++){
+            User user = allUsers.get(i);
+            Wishlist wishlist = shuffledWishlists.get(i);
+
+            Dispatch dispatch = new Dispatch(
+                user,
+                wishlist,
+                peanut
+            );
+
+            newDispatchs.add(dispatch);
+        }
 
         Peanut savedPeanut = peanutRepository.save(peanut);
         return toDTO(savedPeanut);
