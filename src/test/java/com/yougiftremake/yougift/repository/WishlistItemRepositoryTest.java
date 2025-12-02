@@ -192,6 +192,43 @@ public class WishlistItemRepositoryTest {
     }
 
     @Test
+    void shouldGetWishlists(){
+
+        // Arrange
+
+        Wishlist wishlist1 = new Wishlist(
+            "test",
+            "test",
+            null,
+            null, 
+            null
+        );
+
+        Wishlist wishlist2 = new Wishlist(
+            "test",
+            "test",
+            null,
+            null, 
+            null
+        );
+
+        List<Wishlist> wishlistList = new ArrayList<>();
+        wishlistList.add(wishlist1);
+        wishlistList.add(wishlist2);
+        Set<Wishlist> wishlists = new HashSet<>(wishlistList);
+
+        // Act
+
+        item1.setWishlists(wishlists);
+
+        // Assert
+
+        assertEquals(2, item1.getWishlists().size());
+        assertTrue(item1.getWishlists().contains(wishlist1));
+
+    }
+
+    @Test
     void shouldDeleteWishlistItem(){
 
         // Arrange
