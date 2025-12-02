@@ -1,9 +1,11 @@
 package com.yougiftremake.yougift.service.peanut;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class PeanutService {
     public PeanutResponse createPeanutFromRequest(PeanutCreateRequest createRequest) {
         User owner = userRepository.findById(createRequest.ownerId())
             .orElseThrow(() -> new IllegalStateException("User with id " + createRequest.ownerId() + " does not exist"));
-        Peanut peanut = new Peanut(false, owner, null, null);
+        Peanut peanut = new Peanut(false, owner, null, null, null);
         Peanut savedPeanut = peanutRepository.save(peanut);
         return toDTO(savedPeanut);
     }
@@ -106,43 +108,10 @@ public class PeanutService {
             );
     }
 
-    public Peanut distribute(Long peanutId) {
-        Peanut peanut = peanutRepository.findById(peanutId)
-            .orElseThrow(() -> new IllegalStateException(
-                "Peanut with id " + peanutId + " does not exist"
-            ));
-        if (peanut.getIsDistributed()) {
-            throw new IllegalStateException("Peanut is already distributed");
-        }
-
-        if (peanut.getWishlists().isEmpty()) {
-            throw new IllegalStateException("Peanut has no wishlists to distribute");
-        }
-        List<User> allUsers = new ArrayList<>(peanut.getUsers());
-        if (allUsers.size() < 2) {
-            throw new IllegalStateException("Not enough users to distribute peanut");
-        }
-
-        // Random shift for distribution
-        long seed = System.currentTimeMillis();
-        Random random = new Random(seed);
-        int shift = random.nextInt(allUsers.size() - 1) + 1;
-
-        // New rotated list
-        Set<User> shuffledUsers = rotate(allUsers, shift);
-
-        peanut.setUsers(shuffledUsers);
-        peanut.setIsDistributed(true);
-
-        return peanutRepository.save(peanut);
-    }
-
-    public Set<User> rotate(List<User> list, int shift) {
+    public List<Wishlist> rotate(List<Wishlist> list, int shift) {
         int size = list.size();
-        List<User> rotated = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            rotated.add(list.get((i + shift) % size));
-        }
+        List<Wishlist> rotated = new ArrayList<>(size);
+        Collections.rotate(rotated, shift);
         return rotated;
     }
 
@@ -238,16 +207,26 @@ public class PeanutService {
         if (allUsers.size() < 2) {
             throw new IllegalStateException("Not enough users to distribute peanut");
         }
+        List<Wishlist> allWishlists = new ArrayList<>(peanut.getWishlists());
+        if (allWishlists.size() != allUsers.size()) {
+            throw new IllegalStateException("There should be as much users as wishlists");
+        }
 
         // Random shift for distribution
         long seed = System.currentTimeMillis();
         Random random = new Random(seed);
         int shift = random.nextInt(allUsers.size() - 1) + 1;
 
-        // New rotated list
-        List<User> shuffledUsers = rotate(allUsers, shift);
+        // New wishlist order
+        List<Wishlist> shuffledWishlists = rotate(allWishlists, shift);
 
-        peanut.setUsers(shuffledUsers);
+        // New dispatch
+        Map<User, Wishlist> newDispatch = new HashMap<>();
+        for (int i = 0; i < allUsers.size(); i++){
+            newDispatch.put(allUsers.get(i), shuffledWishlists.get(i));
+        }
+
+        peanut.setDispatch(newDispatch);
         peanut.setIsDistributed(true);
 
         Peanut savedPeanut = peanutRepository.save(peanut);

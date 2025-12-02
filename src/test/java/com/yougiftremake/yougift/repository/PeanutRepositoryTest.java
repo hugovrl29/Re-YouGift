@@ -48,12 +48,14 @@ public class PeanutRepositoryTest {
             false,
             user,
             null,
+            null,
             null
         );
 
         peanut2 = new Peanut(
             false,
             user,
+            null,
             null,
             null
         );
@@ -92,6 +94,7 @@ public class PeanutRepositoryTest {
         // Arrange
         Peanut peanut = new Peanut(false,
             user,
+            null,
             null,
             null
         );

@@ -1,5 +1,7 @@
 package com.yougiftremake.yougift.entity;
 
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -45,15 +47,23 @@ public class Peanut {
     )
     Set<User> users;
 
+    @OneToMany(
+        mappedBy = "peanut",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private Set<Dispatch> dispatchs = new HashSet<>();
+
     // Constructors
     public Peanut() {
     }
 
-    public Peanut(Boolean isDistributed, User owner, Set<Wishlist> wishlists, Set<User> users) {
+    public Peanut(Boolean isDistributed, User owner, Set<Wishlist> wishlists, Set<User> users, Set<Dispatch> dispatchs) {
         this.isDistributed = isDistributed;
         this.owner = owner;
         this.wishlists = wishlists;
         this.users = users;
+        this.dispatchs = dispatchs;
     }
 
     // Getters and Setters
@@ -87,6 +97,12 @@ public class Peanut {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+    public Set<Dispatch> getDispatchs() {
+        return dispatchs;
+    }
+    public void setDispatchs(Set<Dispatch> dispatchs) {
+        this.dispatchs = dispatchs;
+    }
 
     public String toString() {
         return "Peanut{" +
@@ -95,6 +111,7 @@ public class Peanut {
                 ", owner=" + owner +
                 ", wishlists=" + wishlists +
                 ", users=" + users +
+                ", dispatchs=" + dispatchs +
                 '}';
     }
 

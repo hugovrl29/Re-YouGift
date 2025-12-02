@@ -181,6 +181,7 @@ public class UserRepositoryTest {
             false,
             dupont,
             null,
+            null,
             null
         );
 

@@ -150,6 +150,7 @@ public class WishlistRepositoryTest {
             false,
             user,
             null,
+            null,
             null
         );
 
