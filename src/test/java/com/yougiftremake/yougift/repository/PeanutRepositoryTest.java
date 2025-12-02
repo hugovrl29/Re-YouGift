@@ -12,8 +12,10 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
+import com.yougiftremake.yougift.entity.Dispatch;
 import com.yougiftremake.yougift.entity.Peanut;
 import com.yougiftremake.yougift.entity.User;
+import com.yougiftremake.yougift.entity.Wishlist;
 import com.yougiftremake.yougift.repository.peanut.PeanutRepository;
 
 @DataJpaTest
@@ -156,6 +158,91 @@ public class PeanutRepositoryTest {
         // Assert
 
         assertEquals(users, peanut1.getUsers());
+    }
+
+    @Test
+    void shouldSetDispatchs(){
+        // Arrange
+
+        Wishlist wishlist = new Wishlist(
+            null,
+            null,
+            null,
+            null,
+            user
+        );
+        Dispatch dispatch = new Dispatch(
+            user,
+            wishlist,
+            peanut1
+        );
+
+        List<Dispatch> dispatchList = new ArrayList<>();
+        dispatchList.add(dispatch);
+        Set<Dispatch> dispatchs = new HashSet<>(dispatchList);
+
+        // Act
+
+        peanut1.setDispatchs(dispatchs);
+
+        // Assert
+
+        assertEquals(dispatchs, peanut1.getDispatchs());
+
+    }
+
+    @Test
+    void shouldSetOwner(){
+        // Arrange
+        User test = new User(
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            false,
+            LocalDate.now(),
+            "test",
+            "test",
+            null,
+            null,
+            null
+        );
+
+        // Act
+
+        peanut1.setOwner(test);
+
+        // Assert
+
+        assertEquals(test, peanut1.getOwner());
+        assertNotEquals(user, peanut1.getOwner());
+    }
+
+    @Test
+    void shouldsetWishlist(){
+
+        // Arrange
+
+        Wishlist wishlist = new Wishlist(
+            "test",
+            "test",
+            null,
+            null,
+            user
+        );
+
+        List<Wishlist> wishlistsList = new ArrayList<>();
+        wishlistsList.add(wishlist);
+        Set<Wishlist> wishlists = new HashSet<>(wishlistsList);
+
+        // Act
+
+        peanut1.setWishlists(wishlists);
+
+        // Assert
+
+        assertEquals(wishlists, peanut1.getWishlists());
     }
 
     @Test
