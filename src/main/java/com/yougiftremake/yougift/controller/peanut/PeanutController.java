@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.yougiftremake.yougift.dto.peanut.PeanutCreateRequest;
 import com.yougiftremake.yougift.dto.peanut.PeanutResponse;
-import com.yougiftremake.yougift.dto.peanut.PeanutUpdateRequest;
 import com.yougiftremake.yougift.service.peanut.PeanutService;
 
 import jakarta.validation.Valid;
@@ -40,15 +39,6 @@ public class PeanutController {
     @PostMapping
     public ResponseEntity<PeanutResponse> createPeanut(@Valid @RequestBody PeanutCreateRequest createRequest) {
         PeanutResponse peanutResponse = peanutService.createPeanutFromRequest(createRequest);
-        return ResponseEntity.ok(peanutResponse);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<PeanutResponse> updatePeanut(
-        @PathVariable Long id,
-        @Valid @RequestBody PeanutUpdateRequest updateRequest
-    ) {
-        PeanutResponse peanutResponse = peanutService.updatePeanut(id, updateRequest);
         return ResponseEntity.ok(peanutResponse);
     }
 
