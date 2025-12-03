@@ -52,20 +52,6 @@ public class PeanutService {
         return toDTO(savedPeanut);
     }
 
-    @Transactional
-    public PeanutResponse updatePeanut(
-        Long peanutId,
-        PeanutUpdateRequest updateRequest
-    ) {
-        Peanut peanut = peanutRepository.findById(peanutId)
-            .orElseThrow(() -> new IllegalStateException(
-                "Peanut with id " + peanutId + " does not exist"
-            ));
-
-        Peanut updatedPeanut = peanutRepository.save(peanut);
-        return toDTO(updatedPeanut);
-    }
-
     public void deletePeanut(Long peanutId) {
         if (!peanutRepository.existsById(peanutId)) {
             throw new IllegalStateException(

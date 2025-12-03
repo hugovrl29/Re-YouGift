@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.yougiftremake.yougift.dto.peanut.PeanutCreateRequest;
 import com.yougiftremake.yougift.dto.peanut.PeanutResponse;
+import com.yougiftremake.yougift.dto.peanut.PeanutUpdateRequest;
 import com.yougiftremake.yougift.entity.Peanut;
 import com.yougiftremake.yougift.entity.User;
 import com.yougiftremake.yougift.repository.peanut.PeanutRepository;
@@ -65,7 +66,6 @@ public class PeanutServiceTest {
         );
 
         PeanutCreateRequest newPeanut = new PeanutCreateRequest(
-            "test",
             userId
         );
 
