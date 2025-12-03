@@ -39,7 +39,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService UserService;
+    private UserService userService;
 
     private User savedUser;
 
@@ -85,7 +85,7 @@ public class UserServiceTest {
 
         // Act
 
-        UserResponse resultUser = UserService.createUserFromRequest(newUser);
+        UserResponse resultUser = userService.createUserFromRequest(newUser);
 
         // Assert
 
@@ -110,7 +110,7 @@ public class UserServiceTest {
 
         // Act
 
-        UserResponse resultUser = UserService.updateUser(savedUser.getId(), newUser);
+        UserResponse resultUser = userService.updateUser(savedUser.getId(), newUser);
 
         // Assert
 
@@ -128,7 +128,7 @@ public class UserServiceTest {
 
         // Act
 
-        UserService.deleteUser(userId);
+        userService.deleteUser(userId);
 
         // Assert
 
@@ -162,7 +162,7 @@ public class UserServiceTest {
 
         // Act
 
-        UserResponse resultUser = UserService.getUserById(userId);
+        UserResponse resultUser = userService.getUserById(userId);
 
         // Assert
 
@@ -209,7 +209,7 @@ public class UserServiceTest {
 
         // Act
 
-        List<User> resultUser = UserService.getUserByUsername("test");
+        List<User> resultUser = userService.getUserByUsername("test");
 
         // Assert
 
@@ -241,7 +241,7 @@ public class UserServiceTest {
 
         // Act
 
-        UserResponse resultUser = UserService.changeBanStatusAndReturn(userId);
+        UserResponse resultUser = userService.changeBanStatusAndReturn(userId);
 
         // Assert
 
@@ -304,13 +304,13 @@ public class UserServiceTest {
 
         // Act
 
-        List<UserResponse> friends = UserService.getFriendsOfUserAsDTO(userId);
+        List<UserResponse> friends = userService.getFriendsOfUserAsDTO(userId);
 
         // Assert
 
         assertEquals(2, friends.size());
-        assertTrue(friends.contains(UserService.toDTO(user2)));
-        assertTrue(friends.contains(UserService.toDTO(user3)));
+        assertTrue(friends.contains(userService.toDTO(user2)));
+        assertTrue(friends.contains(userService.toDTO(user3)));
     }
 
     @Test
@@ -349,13 +349,13 @@ public class UserServiceTest {
 
         // Act
 
-        List<UserResponse> allUsers = UserService.getAllUsersAsDTO();
+        List<UserResponse> allUsers = userService.getAllUsersAsDTO();
 
         // Assert
 
         assertEquals(2, allUsers.size());
-        assertTrue(allUsers.contains(UserService.toDTO(user1)));
-        assertTrue(allUsers.contains(UserService.toDTO(user2)));
+        assertTrue(allUsers.contains(userService.toDTO(user1)));
+        assertTrue(allUsers.contains(userService.toDTO(user2)));
     }
 
     @Test
@@ -402,11 +402,11 @@ public class UserServiceTest {
 
         // Act
 
-        UserResponse friendAdded = UserService.addFriend(user1Id, user2Id);
+        UserResponse friendAdded = userService.addFriend(user1Id, user2Id);
 
         // Assert
 
-        assertEquals(UserService.toDTO(user1), friendAdded);
+        assertEquals(userService.toDTO(user1), friendAdded);
         assertTrue(user1.getFriends().contains(user2));
         assertTrue(user2.getFriends().contains(user1));
     }
@@ -457,11 +457,11 @@ public class UserServiceTest {
 
         // Act
 
-        UserResponse friendRemoved = UserService.removeFriend(user1Id, user2Id);
+        UserResponse friendRemoved = userService.removeFriend(user1Id, user2Id);
 
         // Assert
 
-        assertEquals(friendRemoved, UserService.toDTO(user1));
+        assertEquals(friendRemoved, userService.toDTO(user1));
         assertFalse(user1.getFriends().contains(user2));
         assertFalse(user2.getFriends().contains(user1));
     }
@@ -509,7 +509,7 @@ public class UserServiceTest {
         
         // Act
 
-        List<Long> wishLists = UserService.getWishlistsOfUser(userId);
+        List<Long> wishLists = userService.getWishlistsOfUser(userId);
 
         // Assert
 
@@ -560,7 +560,7 @@ public class UserServiceTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        List<Long> peanutIds = UserService.getPeanutsOfUser(userId);
+        List<Long> peanutIds = userService.getPeanutsOfUser(userId);
 
         // Assert
 
