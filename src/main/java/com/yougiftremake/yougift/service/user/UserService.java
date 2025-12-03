@@ -1,5 +1,7 @@
 package com.yougiftremake.yougift.service.user;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +40,7 @@ public class UserService {
             createRequest.dateOfBirth(),
             createRequest.profilePictureUrl(),
             null,
-            null,
+            new HashSet<>(),
             null,
             null
         );
@@ -108,15 +110,6 @@ public class UserService {
     }
 
     @Transactional
-    public void changeBanStatus(Long userId) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new IllegalStateException(
-                "User with id " + userId + " does not exist"
-            ));
-        user.setIsBanned(!user.getIsBanned());
-    }
-
-    @Transactional
     public UserResponse changeBanStatusAndReturn(Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalStateException(
@@ -124,18 +117,6 @@ public class UserService {
             ));
         user.setIsBanned(!user.getIsBanned());
         return toDTO(user);
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public Set<User> getFriendsOfUser(Long userId) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new IllegalStateException(
-                "User with id " + userId + " does not exist"
-            ));
-        return user.getFriends();
     }
 
     public List<UserResponse> getFriendsOfUserAsDTO(Long userId) {
@@ -172,9 +153,17 @@ public class UserService {
         if (user.getFriends().contains(friend)) {
             throw new IllegalStateException("Already friends with this user");
         }
+
+        List<User> userFriendsList = new ArrayList<>(user.getFriends());
+        userFriendsList.add(friend);
+        Set<User> userFriends = new HashSet<>(userFriendsList);
+
+        List<User> friendFriendsList = new ArrayList<>(friend.getFriends());
+        friendFriendsList.add(user);
+        Set<User> friendFriends = new HashSet<>(friendFriendsList);
         
-        user.getFriends().add(friend);
-        friend.getFriends().add(user);
+        user.setFriends(userFriends);
+        friend.setFriends(friendFriends);
         userRepository.save(user);
         userRepository.save(friend);
         return toDTO(user);
@@ -194,9 +183,18 @@ public class UserService {
         if (!user.getFriends().contains(friend)) {
             throw new IllegalStateException("Not friends with this user");
         }
-        
-        user.getFriends().remove(friend);
-        friend.getFriends().remove(user);
+
+        List<User> userFriendsList = new ArrayList<>(user.getFriends());
+        userFriendsList.remove(friend);
+        Set<User> userFriends = new HashSet<>(userFriendsList);
+
+        List<User> friendFriendsList = new ArrayList<>(friend.getFriends());
+        friendFriendsList.remove(user);
+        Set<User> friendFriends = new HashSet<>(friendFriendsList);
+
+        user.setFriends(userFriends);
+        friend.setFriends(friendFriends);
+
         userRepository.save(user);
         userRepository.save(friend);
         return toDTO(user);
