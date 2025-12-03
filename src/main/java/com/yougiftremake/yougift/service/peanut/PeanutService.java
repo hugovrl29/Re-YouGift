@@ -90,7 +90,11 @@ public class PeanutService {
         wishlistRepository.findById(wishlistId)
             .ifPresentOrElse(
                 wishlist -> {
-                    peanut.getWishlists().remove(wishlist);
+                    List<Wishlist> wishlistsList = new ArrayList<>(peanut.getWishlists());
+                    wishlistsList.remove(wishlist);
+                    Set<Wishlist> wishlists = new HashSet<>(wishlistsList);
+
+                    peanut.setWishlists(wishlists);
                     peanutRepository.save(peanut);
                 },
                 () -> {
